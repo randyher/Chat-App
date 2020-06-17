@@ -6,7 +6,8 @@
  */
 
 module.exports = {
-  
-
+  logout: (req, res) => {
+    req.session.userId = null;
+    res.redirect("/");
+  },
 };
-
