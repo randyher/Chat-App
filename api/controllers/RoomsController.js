@@ -6,7 +6,8 @@
  */
 
 module.exports = {
-  
-
+  index: (req, res) => {
+    console.log("Hey");
+    res.view("rooms");
+  },
 };
-
