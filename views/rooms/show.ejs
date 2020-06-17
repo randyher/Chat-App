@@ -1,3 +1,19 @@
 <div class="mx-auto text-center" style="width: 600px; margin-top: 5rem;">
   <h1 class="text-center">Room: <%= room.topic %></h1>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-body output"></div>
+    </div>
+  </div>
+  <div class="container">
+    <textarea
+      style="width: 400px; margin-top: 1rem;"
+      type="text"
+      name="name"
+    ></textarea>
+    <button type="button" name="button" id="send" class="btn btn-success">
+      Send
+    </button>
+  </div>
 </div>

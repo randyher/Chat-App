@@ -69,7 +69,6 @@ module.exports = {
       if (!room) {
         res.redirect("/rooms");
       }
-      console.log(room);
       res.view("rooms/show", { room });
     });
   },
