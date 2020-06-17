@@ -7,11 +7,16 @@
 
 module.exports = {
   index: (req, res) => {
+    if (!req.body) {
+      res.redirect("/");
+    }
+
+    const { username } = req.body;
     Room.find({}).exec((err, rooms) => {
       if (err) {
         res.send(500, { error: "Database Error" });
       }
-      res.view("rooms/index", { rooms });
+      res.view("rooms/index", { rooms, username });
     });
   },
 
