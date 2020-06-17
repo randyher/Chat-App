@@ -5,6 +5,8 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+var PubNub = require("pubnub");
+
 module.exports = {
   index: (req, res) => {
     if (!req.body && !req.session.userId) {
@@ -60,16 +62,70 @@ module.exports = {
     });
   },
 
-  show: (req, res) => {
+  show: async (req, res) => {
     const { id } = req.params;
-    Room.findOne({ id }).exec((err, room) => {
-      if (err) {
-        res.send(500, { error: "Database Error" });
-      }
-      if (!room) {
-        res.redirect("/rooms");
-      }
-      res.view("rooms/show", { room });
-    });
+
+    //Pubnub Set Up
+    // const pubnub = new PubNub({
+    // replace the key placeholders with your own PubNub publish and subscribe keys
+    //   publishKey: "pub-c-4e92a762-6a51-4356-ba35-7b9f926589ce",
+    //   subscribeKey: "sub-c-15adbaec-ae7d-11ea-b622-0efe000536d8",
+    //   uuid: "theClientUUID",
+    // });
+
+    // console.log(pubnub);
+
+    // pubnub.addListener({
+    // message: function (event) {
+    //   displayMessage(
+    //     "[MESSAGE: received]",
+    //     event.message.entry + ": " + event.message.update
+    //   );
+    // },
+    // presence: function (event) {
+    //   displayMessage(
+    //     "[PRESENCE: " + event.action + "]",
+    //     "uuid: " + event.uuid + ", channel: " + event.channel
+    //   );
+    // },
+    // status: function (event) {
+    //   displayMessage(
+    //     "[STATUS: " + event.category + "]",
+    //     "connected to channels: " + event.affectedChannels
+    //   );
+    //   if (event.category == "PNConnectedCategory") {
+    //     submitUpdate(theEntry, "Harmless.");
+    //   }
+    // },
+    // });
+
+    // const allRoomsObjects = await Room.find({});
+    // const currentRoom = await Room.findOne({ id });
+
+    // allRoomsTopics = allRoomsObjects.map((room) => room.topic);
+    // console.log(allRoomsTopics);
+    // pubnub.subscribe({
+    //   channels: allRoomsTopics,
+    //   withPresence: true,
+    // });
+
+    // const theChannel = currentRoom.topic;
+    // const theEntry = "Person";
+
+    // console.log(theChannel);
+    //
+
+    Room.findOne({ id })
+      .populate("messages")
+      .exec((err, room) => {
+        console.log(room);
+        if (err) {
+          res.send(500, { error: "Database Error" });
+        }
+        if (!room) {
+          res.redirect("/rooms");
+        }
+        res.view("rooms/show", { room });
+      });
   },
 };
