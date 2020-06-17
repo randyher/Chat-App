@@ -22,6 +22,7 @@ module.exports.routes = {
   "/rooms": "RoomsController.index",
   "/rooms/new": "RoomsController.new",
   "/rooms/create": "RoomsController.create",
+  "/rooms/:id": "RoomsController.show",
   "/logout": "UsersController.logout",
 
   /***************************************************************************

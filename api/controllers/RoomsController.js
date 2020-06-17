@@ -59,4 +59,18 @@ module.exports = {
       res.redirect("/rooms");
     });
   },
+
+  show: (req, res) => {
+    const { id } = req.params;
+    Room.findOne({ id }).exec((err, room) => {
+      if (err) {
+        res.send(500, { error: "Database Error" });
+      }
+      if (!room) {
+        res.redirect("/rooms");
+      }
+      console.log(room);
+      res.view("rooms/show", { room });
+    });
+  },
 };
