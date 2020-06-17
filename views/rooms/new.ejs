@@ -1,11 +1,13 @@
 <div class="mx-auto text-center" style="width: 600px; margin-top: 5rem;">
   <h1 class="text-center">Create a new room!</h1>
-  <form method="post" action="/rooms">
+  <form method="post" action="/rooms/create">
     <input
       class="form-control form-control-lg"
       type="text"
+      name="topic"
       placeholder="Chatroom Name"
     />
+
     <button type="submit" class="btn btn-primary" style="margin-top: 1rem;">
       Submit
     </button>

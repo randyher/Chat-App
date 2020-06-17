@@ -16,11 +16,21 @@ module.exports = {
   },
 
   new: (req, res) => {
-    Room.find({}).exec((err, articles) => {
+    Room.find({}).exec((err, rooms) => {
       if (err) {
         res.send(500, { error: "Database Error" });
       }
-      res.view("rooms/new", { articles });
+      res.view("rooms/new", { rooms });
+    });
+  },
+
+  create: (req, res) => {
+    const newRoom = { topic: req.body.topic };
+    Room.create(newRoom).exec((err) => {
+      if (err) {
+        res.send(500, { error: "Database Error" });
+      }
+      res.redirect("/rooms");
     });
   },
 };
