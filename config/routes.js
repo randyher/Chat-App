@@ -20,6 +20,7 @@ module.exports.routes = {
 
   "/": { view: "pages/homepage" },
   "/rooms": "RoomsController.index",
+  "/rooms/new": "RoomsController.new",
 
   /***************************************************************************
    *                                                                          *

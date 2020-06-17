@@ -7,7 +7,20 @@
 
 module.exports = {
   index: (req, res) => {
-    console.log("Hey");
-    res.view("rooms");
+    Room.find({}).exec((err, rooms) => {
+      if (err) {
+        res.send(500, { error: "Database Error" });
+      }
+      res.view("rooms/index", { rooms });
+    });
+  },
+
+  new: (req, res) => {
+    Room.find({}).exec((err, articles) => {
+      if (err) {
+        res.send(500, { error: "Database Error" });
+      }
+      res.view("rooms/new", { articles });
+    });
   },
 };
