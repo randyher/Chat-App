@@ -2,7 +2,7 @@
   Pick a Chatroom
 </h1>
 
-<p class="text font-weight-bold">Current User: <%= username %></p>
+<p class="text font-weight-bold">Current User: <%= user.username %></p>
 <table class="table table-striped">
   <thread>
     <tr>
@@ -24,4 +24,4 @@
   </tbody>
 </table>
 <a href="/rooms/new" class="btn btn-outline-primary">Create Chatroom</a>
-<a href="/" class="btn btn-outline-danger">Log Out</a>
+<a href="/logout" class="btn btn-outline-danger">Log Out</a>

@@ -7,17 +7,38 @@
 
 module.exports = {
   index: (req, res) => {
-    if (!req.body) {
+    if (!req.body && !req.session.userId) {
       res.redirect("/");
+    } else if (req.body) {
+      const { username } = req.body;
+      User.findOrCreate({ username }, { username }).exec((err, user) => {
+        if (err) {
+          res.send(500, { error: "Could not find user" });
+        }
+        req.session.userId = user.id;
+        Room.find({}).exec((err, rooms) => {
+          if (err) {
+            res.send(500, { error: "Could not find chatrooms" });
+          }
+          console.log(req.session);
+          res.view("rooms/index", { rooms, user });
+        });
+      });
+    } else if (req.session.userId) {
+      User.findOne({ id: req.session.userId }).exec((err, user) => {
+        req.session.userId = user.id;
+        if (err) {
+          res.send(500, { error: "No User Found" });
+        }
+        Room.find({}).exec((err, rooms) => {
+          if (err) {
+            res.send(500, { error: "Database Error" });
+          }
+          console.log(req.session);
+          res.view("rooms/index", { rooms, user });
+        });
+      });
     }
-
-    const { username } = req.body;
-    Room.find({}).exec((err, rooms) => {
-      if (err) {
-        res.send(500, { error: "Database Error" });
-      }
-      res.view("rooms/index", { rooms, username });
-    });
   },
 
   new: (req, res) => {
