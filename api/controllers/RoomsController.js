@@ -5,7 +5,7 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
-var PubNub = require("pubnub");
+var Filter = require("bad-words");
 
 module.exports = {
   index: (req, res) => {
@@ -13,6 +13,12 @@ module.exports = {
       res.redirect("/");
     } else if (req.body) {
       const { username } = req.body;
+      filter = new Filter();
+      if (filter.isProfane(username)) {
+        res.send(500, {
+          error: "Username is using profanity; go back and try again",
+        });
+      }
       User.findOrCreate({ username }, { username }).exec((err, user) => {
         if (err) {
           res.send(500, { error: "Could not find user" });
@@ -51,7 +57,9 @@ module.exports = {
     const newRoom = { topic: req.body.topic };
     Room.create(newRoom).exec((err) => {
       if (err) {
-        res.send(500, { error: "Room name must be unique" });
+        res.send(500, {
+          error: "Room name must be unique; go back and try again!",
+        });
       }
       res.redirect("/rooms");
     });
