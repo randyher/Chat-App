@@ -1,5 +1,5 @@
 <div class="mx-auto text-center" style="width: 600px; margin-top: 5rem;">
-  <h1 class="text-center">Room: <%= room.topic %></h1>
+  <h1 class="text-center" id="channel-topic">Room: <%= room.topic %></h1>
 
   <a
     style="margin-bottom: 1rem;"
@@ -19,11 +19,7 @@
     </div>
   </div>
   <div class="container">
-    <form
-      method="post"
-      id="message-form"
-      action="/messages/create/<%= room.id %>"
-    >
+    <form method="post" id="message-form">
       <input
         style="width: 550px; margin-top: 1rem;"
         type="text"

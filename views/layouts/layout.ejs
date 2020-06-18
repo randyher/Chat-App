@@ -138,31 +138,46 @@
     ></script>
     
     <script type="text/javascript">
-      $(document).ready(function(){
-        console.log("Here?")
+      $(document).ready(function(e){
+        
 
-      // const pubnub = new PubNub({
-      //   // replace the key placeholders with your own PubNub publish and subscribe keys
-      //   publishKey: "pub-c-4e92a762-6a51-4356-ba35-7b9f926589ce",
-      //   subscribeKey: "sub-c-15adbaec-ae7d-11ea-b622-0efe000536d8",
-      //   uuid: "theClientUUID",
-      // });
+        const pubnub = new PubNub({
+          publishKey: "pub-c-4e92a762-6a51-4356-ba35-7b9f926589ce",
+          subscribeKey: "sub-c-15adbaec-ae7d-11ea-b622-0efe000536d8",
+          uuid: "theClientUUID",
+        });
 
-      // console.log(pubnub)
+        
+        const channelTopic = document.getElementById("channel-topic").innerText.split("Room:")[1]
+        pubnub.subscribe({channels: [ channelTopic ]})
+        
 
-
-
-        $("#message-form").submit(function(e){
-          e.preventDefault()
+        pubnub.addListener({
+          message: function (event) {
+          const {user, content} = (event.message)
           let li = document.createElement('li')
-          let content = e.target.message.value
-          let user = e.target.user.value
-          let room = e.target.room.value
-
           li.innerText = `${user}: ${content}` 
           li.style = "text-align: left; list-style: none;"
           $("#message-form").trigger('reset')
           $(".output").append(li)
+          },
+        })
+
+        $("#message-form").submit(function(e){
+          e.preventDefault()
+          let content = e.target.message.value
+          let user = e.target.user.value
+          let room = e.target.room.value
+         
+          pubnub.publish({
+            channel: channelTopic,
+            message: {user, content}
+          }, (status, response) => {
+            if (status.error) {
+              console.log(status)
+            }
+          })
+
           jQuery.post(`/messages/create/${room}`, {username: user, text: content})
         })
 
