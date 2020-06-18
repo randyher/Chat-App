@@ -117,7 +117,7 @@
     <script src="/dependencies/sails.io.js"></script>
     <!--SCRIPTS END-->
 
-    <!-- <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.27.4.min.js"></script> -->
+    <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.27.4.min.js"></script>
 
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
@@ -136,7 +136,37 @@
       integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
       crossorigin="anonymous"
     ></script>
+    
+    <script type="text/javascript">
+      $(document).ready(function(){
+        console.log("Here?")
 
+      // const pubnub = new PubNub({
+      //   // replace the key placeholders with your own PubNub publish and subscribe keys
+      //   publishKey: "pub-c-4e92a762-6a51-4356-ba35-7b9f926589ce",
+      //   subscribeKey: "sub-c-15adbaec-ae7d-11ea-b622-0efe000536d8",
+      //   uuid: "theClientUUID",
+      // });
+
+      // console.log(pubnub)
+
+
+
+        $("#message-form").submit(function(e){
+          e.preventDefault()
+          let li = document.createElement('li')
+          let content = e.target.message.value
+          let user = e.target.user.value
+
+          li.innerText = `${user}: ${content}` 
+          li.style = "text-align: left; list-style: none;"
+
+          $(".output").append(li)
+        })
+
+      })
+      
+    </script>
 
   </body>
 </html>

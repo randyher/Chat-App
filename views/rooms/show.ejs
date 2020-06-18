@@ -1,19 +1,44 @@
 <div class="mx-auto text-center" style="width: 600px; margin-top: 5rem;">
   <h1 class="text-center">Room: <%= room.topic %></h1>
 
+  <a
+    style="margin-bottom: 1rem;"
+    href="/rooms"
+    class="btn btn-outline-secondary"
+    >Back to all Rooms</a
+  >
   <div class="container">
     <div class="card">
-      <div class="card-body output"></div>
+      <div class="card-body output">
+        <% messages.forEach((message) => { %>
+        <li style="text-align: left; list-style: none;">
+          <%= `${message.user.username}: ${message.text}` %>
+        </li>
+        <% }) %>
+      </div>
     </div>
   </div>
   <div class="container">
-    <textarea
-      style="width: 400px; margin-top: 1rem;"
-      type="text"
-      name="name"
-    ></textarea>
-    <button type="button" name="button" id="send" class="btn btn-success">
-      Send
-    </button>
+    <form
+      method="post"
+      id="message-form"
+      action="/messages/create/<%= room.id %>"
+    >
+      <input
+        style="width: 550px; margin-top: 1rem;"
+        type="text"
+        name="message"
+      />
+
+      <input
+        style="width: 550px; margin-top: 1rem;"
+        type="hidden"
+        name="user"
+        value="<%= currentUser.username %>"
+      />
+      <button style="margin-top: 1rem;" type="submit" class="btn btn-success">
+        Send
+      </button>
+    </form>
   </div>
 </div>
