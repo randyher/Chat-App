@@ -12,18 +12,19 @@ module.exports = {
     if (!req.session.userId) {
       res.redirect("/");
     }
-
     const { id } = req.params;
-    const { message } = req.body;
+    const { username, text } = req.body;
+    console.log(username, text);
 
-    const newMessage = await Message.create({
-      text: message,
-      room: id,
-      user: req.session.userId,
+    User.findOne({ username }).exec(async (err, user) => {
+      console.log(user.id);
+      const newMessage = await Message.create({
+        text,
+        room: id,
+        user: user.id,
+      });
     });
-    const user = User.findOne({ id: req.session.userId }).exec((err, user) => {
-      res.redirect(`/rooms/${id}`);
-      // return res.ok();
-    });
+
+    return res.ok();
   },
 };

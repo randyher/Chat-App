@@ -157,11 +157,13 @@
           let li = document.createElement('li')
           let content = e.target.message.value
           let user = e.target.user.value
+          let room = e.target.room.value
 
           li.innerText = `${user}: ${content}` 
           li.style = "text-align: left; list-style: none;"
-
+          $("#message-form").trigger('reset')
           $(".output").append(li)
+          jQuery.post(`/messages/create/${room}`, {username: user, text: content})
         })
 
       })
