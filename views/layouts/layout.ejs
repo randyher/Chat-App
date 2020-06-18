@@ -168,6 +168,8 @@
         $("#message-form").submit(function(e){
           e.preventDefault()
           let content = e.target.message.value
+
+          if (content === "") { return }
           let user = e.target.user.value
           let room = e.target.room.value
          
