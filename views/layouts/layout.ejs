@@ -151,9 +151,11 @@
         const channelTopic = document.getElementById("channel-topic").innerText.split("Room:")[1]
         pubnub.subscribe({channels: [ channelTopic ]})
         
+        
 
         pubnub.addListener({
           message: function (event) {
+          console.log("?")
           const {user, content} = (event.message)
           let li = document.createElement('li')
           li.innerText = `${user}: ${content}` 

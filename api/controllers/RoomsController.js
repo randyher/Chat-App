@@ -44,19 +44,14 @@ module.exports = {
   },
 
   new: (req, res) => {
-    Room.find({}).exec((err, rooms) => {
-      if (err) {
-        res.send(500, { error: "Database Error" });
-      }
-      res.view("rooms/new", { rooms });
-    });
+    res.view("rooms/new");
   },
 
   create: (req, res) => {
     const newRoom = { topic: req.body.topic };
     Room.create(newRoom).exec((err) => {
       if (err) {
-        res.send(500, { error: "Database Error" });
+        res.send(500, { error: "Room name must be unique" });
       }
       res.redirect("/rooms");
     });

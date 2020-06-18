@@ -10,6 +10,7 @@ module.exports = {
     topic: {
       type: "string",
       required: true,
+      unique: true,
     },
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
